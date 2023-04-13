@@ -12,7 +12,7 @@ _EPOCH_KEY = "ddp_pl:epoch"
 _INTERMEDIATE_VALUE = "ddp_pl:intermediate_value"
 _PRUNED_KEY = "ddp_pl:pruned"
 
-__version__ = "0.0.0"
+__version__ = "0.0.1"
 
 with optuna._imports.try_import() as _imports:
     import pytorch_lightning as pl
@@ -59,6 +59,7 @@ class DDPPyTorchLightningPruningCallback(Callback):
         self.is_ddp_backend = False
 
     def setup(self, trainer: "pl.Trainer", pl_module: "pl.LightningModule", stage: str) -> None:
+        self._trial = self._trial if trainer.is_global_zero else None
         self._trial = TorchDistributedTrial(self._trial)
 
     def on_fit_start(self, trainer: Trainer, pl_module: "pl.LightningModule") -> None:
