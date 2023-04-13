@@ -1,0 +1,2 @@
+# DDPPyTorchLightningPruningCallback
+Support TorchDistributedTrial in PyTorchLightningPruningCallback from Optuna
